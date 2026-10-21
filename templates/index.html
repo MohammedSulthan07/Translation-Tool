@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LinguaFlow — AI Language Translator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+  <main class="shell">
+    <header class="hero">
+      <div class="brand"><div class="logo">↔</div><div><div class="brand-name">LinguaFlow</div><div class="brand-sub">Simple, fast language translation</div></div></div>
+      <span class="pill">20+ languages</span>
+    </header>
+
+    <section class="card">
+      <div class="toolbar">
+        <div class="field"><label for="source">From</label><select id="source">{% for code,name in languages.items() %}<option value="{{ code }}" {% if code=='auto' %}selected{% endif %}>{{ name }}</option>{% endfor %}</select></div>
+        <button id="swap" class="swap" title="Swap languages">⇄</button>
+        <div class="field"><label for="target">To</label><select id="target">{% for code,name in languages.items() %}{% if code != 'auto' %}<option value="{{ code }}" {% if code=='ta' %}selected{% endif %}>{{ name }}</option>{% endif %}{% endfor %}</select></div>
+      </div>
+
+      <div class="workbench">
+        <div class="pane input-pane">
+          <div class="pane-top"><span>Original text</span><span id="counter">0 / 5,000</span></div>
+          <textarea id="sourceText" maxlength="5000" placeholder="Type or paste text here…"></textarea>
+          <div class="pane-actions"><button class="ghost" id="clear">Clear</button><button class="translate" id="translate">Translate&nbsp; →</button></div>
+        </div>
+        <div class="pane output-pane">
+          <div class="pane-top"><span>Translation</span><span id="provider" class="provider">Ready</span></div>
+          <div id="result" class="result empty">Your translated text will appear here.</div>
+          <div class="pane-actions"><button class="ghost" id="copy">Copy</button><button class="ghost" id="speak">🔊 Speak</button></div>
+        </div>
+      </div>
+
+      <div id="status" class="status hidden"></div>
+    </section>
+    <p class="footer">Microsoft Azure Translator is used when credentials are configured. A keyless demo fallback is included for quick testing.</p>
+  </main>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
